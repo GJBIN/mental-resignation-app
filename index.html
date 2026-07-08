@@ -2,8 +2,15 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>精神离职仪式</title>
+  <meta name="theme-color" content="#191c20">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="精神离职">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -63,6 +70,9 @@
           <h2 id="greeting">选择崩溃来源，完成一次安全离场</h2>
         </div>
         <div class="quick-actions">
+          <button id="installButton" class="icon-button install-button" type="button" title="安装到桌面" aria-label="安装到桌面" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M12 6v8"/><path d="m9 11 3 3 3-3"/><path d="M11 18h2"/></svg>
+          </button>
           <button id="themeButton" class="icon-button" type="button" title="切换专注模式" aria-label="切换专注模式">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 1 0 9 9 9 9 0 1 1-9-9z"/></svg>
           </button>

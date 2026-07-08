@@ -44,6 +44,11 @@ $files = @(
     'index.html',
     'styles.css',
     'app.js',
+    'manifest.webmanifest',
+    'service-worker.js',
+    'icons/icon-192.png',
+    'icons/icon-512.png',
+    'icons/maskable-512.png',
     'README.md',
     '.nojekyll'
 )

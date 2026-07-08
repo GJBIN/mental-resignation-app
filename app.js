@@ -68,6 +68,7 @@ const elements = {
   refreshCardButton: document.querySelector("#refreshCardButton"),
   resetButton: document.querySelector("#resetButton"),
   themeButton: document.querySelector("#themeButton"),
+  installButton: document.querySelector("#installButton"),
   historyList: document.querySelector("#historyList"),
   clearHistoryButton: document.querySelector("#clearHistoryButton"),
   savedCount: document.querySelector("#savedCount"),
@@ -77,6 +78,7 @@ const elements = {
 let activeTone = "decent";
 let currentLetter = "";
 let currentSummary = "";
+let deferredInstallPrompt = null;
 let toastTimer = 0;
 
 function iconCheck() {
@@ -264,6 +266,50 @@ function clearHistory() {
   renderHistory();
   showToast("记录已清空");
 }
+function isAppStandalone() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function setupInstallPrompt() {
+  if (!elements.installButton || isAppStandalone()) {
+    return;
+  }
+
+  window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    elements.installButton.hidden = false;
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    elements.installButton.hidden = true;
+    showToast("已安装到桌面");
+  });
+
+  elements.installButton.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) {
+      showToast("请在浏览器菜单中添加到主屏幕");
+      return;
+    }
+
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    elements.installButton.hidden = true;
+    showToast(choice.outcome === "accepted" ? "已开始安装" : "已取消安装");
+  });
+}
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
 
 function updateClock() {
   const now = new Date();
@@ -369,6 +415,8 @@ function escapeHtml(value) {
   }[char]));
 }
 
+setupInstallPrompt();
+registerServiceWorker();
 renderReasons();
 bindEvents();
 renderBossReply();

@@ -52,6 +52,10 @@ button {
   cursor: pointer;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 svg {
   width: 18px;
   height: 18px;
@@ -240,6 +244,18 @@ svg {
   color: var(--ink);
   background: var(--panel);
   border: 1px solid var(--line);
+}
+
+.install-button {
+  color: #fff;
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.install-button:hover {
+  color: #fff;
+  background: var(--accent-dark);
+  border-color: transparent;
 }
 
 .icon-button:hover,
